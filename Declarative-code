@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Preparation') {
+            steps {
+                echo 'I am prepering job execution'
+             }
+           }
+    stage('Build') {// Run the maven build
+        steps {
+              echo "Running Build job"
+    }
+       }
+    stage('Results') {
+       steps {
+         echo "Running test result"
+    }
+      }
+    stage('package') {
+      steps {
+         echo "Running package steps"
+      } 
+     }
+  }
+}
