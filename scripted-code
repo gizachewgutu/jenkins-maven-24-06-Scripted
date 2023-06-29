@@ -1,14 +1,16 @@
 node {
     stage('Preparation') { 
-		echo "I am preparing job execution"
-    }
-    stage('Build') {
-		echo "Running Build job"
+          echo "I am prepering job execution"
+       
+      }
+    stage('Build') {// Run the maven build
+         echo "Running Build job"
+     
     }
     stage('Results') {
-		echo " Running test results"
+         echo "Running test result"
     }
-    stage('Package') {
-		echo " Running package steps"
+    stage('package') {
+         echo "Running package steps"
     }
 }
