@@ -11,6 +11,6 @@ node {
          echo "Running test result"
     }
     stage('package') {
-         eho "Running package steps"
+         echo "Running package steps"
     }
 }
