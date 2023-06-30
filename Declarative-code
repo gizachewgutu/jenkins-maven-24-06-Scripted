@@ -1,26 +1,47 @@
 pipeline {
     agent any
 
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "mvn_home"
+        jdk  "Java-home"
+    }
+
     stages {
-        stage('Preparation') {
+        stage('compile') {
             steps {
-                echo 'I am prepering job execution'
+                // Get some code from a GitHub repository
+                git 'https://github.com/gizachewgutu/maven-webapp-arctype-Ethio.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn compile"
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+           }
+        stage('codeReview') {
+            steps {
+                 sh "mvn pmd:pmd"
              }
            }
-    stage('Build') {// Run the maven build
-        steps {
-              echo "Running Build job"
-    }
-       }
-    stage('Results') {
-       steps {
-         echo "Running test result"
-    }
-      }
-    stage('package') {
-      steps {
-         echo "Running package steps"
-      } 
-     }
-  }
-}
+        stage('UnitTest') {
+            steps {
+                 sh "test" 
+            }
+           }
+    
+        stage('metricCheck') {
+            steps {
+                 sh "mvn cobertura:cobertura -Dcobertura.report.format=xml"  
+            }
+           }
+
+        stage('package') {
+            steps {
+                 sh "mvn package"
+                
+            }
+           }
+          }
+        }
